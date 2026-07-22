@@ -8,16 +8,16 @@ export default defineConfig({
   plugins: [
     tanstackStart({
       server: {
-        entry: "server"
-      }
+        entry: "server",
+      },
     }),
     react(),
     tailwindcss(),
-    tsconfigPaths()
+    tsconfigPaths(),
   ],
   server: {
     host: "::",
-    port: 8080
+    port: 8080,
   },
   resolve: {
     alias: {
