@@ -37,7 +37,7 @@ function Reveal({ children, delay = 0 }: { children: React.ReactNode; delay?: nu
       ref={ref}
       style={{
         opacity: visible ? 1 : 0,
-        transform: visible ? "translateY(0)" : "translateY(24px)",
+        transform: visible ? "translateY(0)" : "translateY(20px)",
         transition: `opacity 0.8s ease, transform 0.8s ease`,
         transitionDelay: `${delay}ms`,
       }}
@@ -63,16 +63,14 @@ function Navbar() {
     { label: "FAQ", href: "#faq" },
   ];
   return (
-    <header
-      className={`fixed top-0 inset-x-0 z-50 transition-all duration-500 ${
-        scrolled ? "py-3" : "py-5"
-      }`}
-    >
+    <header className={`fixed top-0 inset-x-0 z-50 transition-all duration-500 ${scrolled ? "py-3" : "py-5"}`}>
       <div className="mx-auto max-w-6xl px-4">
-        <div className={`glass rounded-2xl px-5 py-3 flex items-center justify-between transition-all ${scrolled ? "shadow-elegant" : ""}`}>
-          <a href="#top" className="flex items-center gap-2">
-            <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-primary to-accent animate-pulse-glow" />
-            <span className="font-display font-bold text-lg">DayPass</span>
+        <div className="clay-sm rounded-full px-5 py-3 flex items-center justify-between">
+          <a href="#top" className="flex items-center gap-2.5">
+            <div className="w-8 h-8 rounded-2xl bg-foreground grid place-items-center">
+              <div className="w-3 h-3 rounded-md bg-background" />
+            </div>
+            <span className="font-display font-bold text-lg tracking-tight">DayPass</span>
           </a>
           <nav className="hidden md:flex items-center gap-8">
             {links.map((l) => (
@@ -81,26 +79,26 @@ function Navbar() {
               </a>
             ))}
           </nav>
-          <div className="flex items-center gap-3">
-            <Link to="/login" className="hidden sm:inline text-sm text-muted-foreground hover:text-foreground">
+          <div className="flex items-center gap-2">
+            <Link to="/login" className="hidden sm:inline text-sm text-muted-foreground hover:text-foreground px-3">
               Sign in
             </Link>
-            <Link to="/login" className="btn-primary-glow hidden sm:inline-flex items-center gap-1.5 rounded-xl px-4 py-2 text-sm font-semibold">
+            <Link to="/login" className="btn-clay hidden sm:inline-flex items-center gap-1.5 px-4 py-2 text-sm font-semibold">
               Get Started <ArrowRight className="w-4 h-4" />
             </Link>
-            <button className="md:hidden p-2" onClick={() => setOpen((v) => !v)} aria-label="Menu">
+            <button className="md:hidden btn-clay-ghost w-10 h-10 grid place-items-center" onClick={() => setOpen((v) => !v)} aria-label="Menu">
               {open ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
             </button>
           </div>
         </div>
         {open && (
-          <div className="glass mt-2 rounded-2xl p-4 md:hidden animate-reveal">
+          <div className="clay mt-3 p-4 md:hidden animate-reveal">
             {links.map((l) => (
-              <a key={l.label} href={l.href} onClick={() => setOpen(false)} className="block py-2 text-sm text-muted-foreground">
+              <a key={l.label} href={l.href} onClick={() => setOpen(false)} className="block py-2.5 text-sm text-muted-foreground">
                 {l.label}
               </a>
             ))}
-            <Link to="/login" className="btn-primary-glow mt-2 inline-flex w-full items-center justify-center gap-1.5 rounded-xl px-4 py-2.5 text-sm font-semibold">
+            <Link to="/login" className="btn-clay mt-3 inline-flex w-full items-center justify-center gap-1.5 px-4 py-3 text-sm font-semibold">
               Get Started <ArrowRight className="w-4 h-4" />
             </Link>
           </div>
@@ -114,22 +112,22 @@ function Navbar() {
 function Hero() {
   return (
     <section id="top" className="relative pt-40 pb-24 overflow-hidden">
-      <div className="glow-orb w-[600px] h-[600px] bg-primary/40 -top-40 -left-40 animate-pulse-glow" />
-      <div className="glow-orb w-[500px] h-[500px] bg-accent/40 top-20 right-0 animate-pulse-glow" />
+      <div className="clay-blob w-[420px] h-[420px] -top-40 -left-40 opacity-60" />
+      <div className="clay-blob w-[320px] h-[320px] top-40 right-[-120px] opacity-50" />
 
-      <div className="relative mx-auto max-w-6xl px-4 grid lg:grid-cols-2 gap-12 items-center">
+      <div className="relative mx-auto max-w-6xl px-4 grid lg:grid-cols-2 gap-14 items-center">
         <div>
           <Reveal>
-            <div className="inline-flex items-center gap-2 glass rounded-full px-3 py-1.5 text-xs text-muted-foreground">
-              <Sparkles className="w-3.5 h-3.5 text-primary" />
+            <div className="inline-flex items-center gap-2 clay-sm rounded-full px-4 py-1.5 text-xs text-muted-foreground">
+              <Sparkles className="w-3.5 h-3.5" />
               Now live in 40+ cities
             </div>
           </Reveal>
           <Reveal delay={100}>
-            <h1 className="mt-6 text-5xl md:text-6xl lg:text-7xl font-bold leading-[1.05]">
+            <h1 className="mt-6 text-5xl md:text-6xl lg:text-7xl font-bold leading-[1.02]">
               Any gym.<br />
-              <span className="text-gradient animate-gradient bg-clip-text">One day.</span><br />
-              Zero commitment.
+              One day.<br />
+              <span className="italic font-light">Zero commitment.</span>
             </h1>
           </Reveal>
           <Reveal delay={200}>
@@ -139,25 +137,27 @@ function Hero() {
             </p>
           </Reveal>
           <Reveal delay={300}>
-            <div className="mt-8 flex flex-wrap items-center gap-4">
-              <Link to="/login" className="btn-primary-glow inline-flex items-center gap-2 rounded-xl px-6 py-3.5 font-semibold">
+            <div className="mt-8 flex flex-wrap items-center gap-3">
+              <Link to="/login" className="btn-clay inline-flex items-center gap-2 px-7 py-4 font-semibold">
                 Get Started <ArrowRight className="w-4 h-4" />
               </Link>
-              <a href="#gyms" className="glass hover-lift inline-flex items-center gap-2 rounded-xl px-6 py-3.5 font-semibold">
+              <a href="#gyms" className="btn-clay-ghost inline-flex items-center gap-2 px-7 py-4 font-semibold">
                 Explore Gyms
               </a>
             </div>
           </Reveal>
           <Reveal delay={400}>
-            <div className="mt-10 flex items-center gap-6">
-              <div className="flex -space-x-2">
-                {["from-primary to-accent", "from-accent to-primary", "from-primary/60 to-accent/60", "from-accent/60 to-primary/60"].map((g, i) => (
-                  <div key={i} className={`w-9 h-9 rounded-full bg-gradient-to-br ${g} border-2 border-background`} />
+            <div className="mt-10 flex items-center gap-5">
+              <div className="flex -space-x-3">
+                {[0,1,2,3].map((i) => (
+                  <div key={i} className="w-10 h-10 rounded-full bg-card grid place-items-center" style={{ boxShadow: "var(--shadow-clay-sm)" }}>
+                    <div className="w-4 h-4 rounded-full bg-foreground/80" />
+                  </div>
                 ))}
               </div>
               <div>
-                <div className="flex items-center gap-0.5">
-                  {[...Array(5)].map((_, i) => <Star key={i} className="w-4 h-4 fill-primary text-primary" />)}
+                <div className="flex items-center gap-1">
+                  {[...Array(5)].map((_, i) => <Star key={i} className="w-4 h-4 fill-foreground text-foreground" />)}
                   <span className="ml-2 text-sm font-semibold">4.9</span>
                 </div>
                 <div className="text-xs text-muted-foreground">Loved by 120k+ athletes</div>
@@ -168,29 +168,29 @@ function Hero() {
 
         <Reveal delay={200}>
           <div className="relative">
-            <div className="absolute inset-0 bg-gradient-to-br from-primary/30 to-accent/30 blur-3xl rounded-full" />
+            <div className="absolute inset-6 rounded-[3rem] bg-card" style={{ boxShadow: "var(--shadow-clay-lg)" }} />
             <img
               src={heroCard}
-              alt="DayPass premium gym access card"
+              alt="DayPass claymorphic access card"
               width={1024}
               height={1024}
-              className="relative w-full max-w-lg mx-auto animate-float drop-shadow-2xl"
+              className="relative w-full max-w-lg mx-auto animate-float"
             />
-            <div className="glass-strong absolute -left-4 top-10 rounded-2xl p-3 animate-float-slow hidden sm:flex items-center gap-2">
-              <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-primary to-accent grid place-items-center">
-                <Zap className="w-4 h-4 text-primary-foreground" />
+            <div className="clay-sm absolute -left-2 top-16 p-3 pr-4 animate-float-slow hidden sm:flex items-center gap-3">
+              <div className="w-10 h-10 rounded-2xl bg-foreground grid place-items-center">
+                <Zap className="w-5 h-5 text-background" />
               </div>
               <div>
-                <div className="text-xs text-muted-foreground">Booked in</div>
+                <div className="text-[10px] uppercase tracking-wider text-muted-foreground">Booked in</div>
                 <div className="text-sm font-semibold">12 seconds</div>
               </div>
             </div>
-            <div className="glass-strong absolute -right-2 bottom-10 rounded-2xl p-3 animate-float hidden sm:flex items-center gap-2">
-              <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-accent to-primary grid place-items-center">
-                <MapPin className="w-4 h-4 text-primary-foreground" />
+            <div className="clay-sm absolute -right-2 bottom-10 p-3 pr-4 animate-float hidden sm:flex items-center gap-3">
+              <div className="w-10 h-10 rounded-2xl bg-foreground grid place-items-center">
+                <MapPin className="w-5 h-5 text-background" />
               </div>
               <div>
-                <div className="text-xs text-muted-foreground">Nearby</div>
+                <div className="text-[10px] uppercase tracking-wider text-muted-foreground">Nearby</div>
                 <div className="text-sm font-semibold">48 gyms</div>
               </div>
             </div>
@@ -207,23 +207,22 @@ function SearchPreview() {
     <section className="relative py-12">
       <div className="mx-auto max-w-4xl px-4">
         <Reveal>
-          <div className="glass-strong rounded-3xl p-2 flex flex-col md:flex-row items-stretch gap-2">
-            <div className="flex items-center gap-3 flex-1 px-4 py-3">
-              <MapPin className="w-5 h-5 text-primary" />
+          <div className="clay rounded-full p-2 flex flex-col md:flex-row items-stretch gap-2 md:rounded-full">
+            <div className="flex items-center gap-3 flex-1 px-5 py-3 clay-inset">
+              <MapPin className="w-4 h-4 text-muted-foreground" />
               <input placeholder="Location — e.g. Brooklyn, NY" className="bg-transparent flex-1 outline-none text-sm placeholder:text-muted-foreground" />
             </div>
-            <div className="hidden md:block w-px bg-border" />
-            <div className="flex items-center gap-3 flex-1 px-4 py-3">
-              <Calendar className="w-5 h-5 text-primary" />
+            <div className="flex items-center gap-3 flex-1 px-5 py-3 clay-inset">
+              <Calendar className="w-4 h-4 text-muted-foreground" />
               <input placeholder="Today, anytime" className="bg-transparent flex-1 outline-none text-sm placeholder:text-muted-foreground" />
             </div>
-            <button className="btn-primary-glow rounded-2xl px-6 py-3 font-semibold inline-flex items-center justify-center gap-2">
+            <button className="btn-clay px-6 py-3 font-semibold inline-flex items-center justify-center gap-2">
               <Search className="w-4 h-4" /> Find gyms
             </button>
           </div>
-          <div className="mt-3 flex flex-wrap gap-2 justify-center">
+          <div className="mt-4 flex flex-wrap gap-2 justify-center">
             {["Yoga", "CrossFit", "Boxing", "Pool", "Sauna", "24/7"].map((t) => (
-              <span key={t} className="glass rounded-full px-3 py-1 text-xs text-muted-foreground hover:text-foreground cursor-pointer transition-colors">
+              <span key={t} className="clay-sm rounded-full px-4 py-1.5 text-xs text-muted-foreground hover:text-foreground cursor-pointer transition-colors">
                 {t}
               </span>
             ))}
@@ -236,12 +235,12 @@ function SearchPreview() {
 
 /* ---------------- Featured gyms ---------------- */
 const gyms = [
-  { name: "Iron Loft", city: "Brooklyn", price: 14, rating: 4.9, tag: "Strength", grad: "from-primary/30 to-accent/30" },
-  { name: "Neon Athletic", city: "SoHo", price: 22, rating: 4.8, tag: "Boutique", grad: "from-accent/30 to-primary/30" },
-  { name: "Pulse Studio", city: "Williamsburg", price: 18, rating: 4.9, tag: "HIIT", grad: "from-primary/40 to-accent/20" },
-  { name: "Vertex Climb", city: "Queens", price: 26, rating: 4.7, tag: "Climbing", grad: "from-accent/40 to-primary/20" },
-  { name: "Aqua Prime", city: "Manhattan", price: 30, rating: 4.9, tag: "Pool & Spa", grad: "from-primary/30 to-accent/40" },
-  { name: "Ronin Boxing", city: "LES", price: 20, rating: 4.8, tag: "Boxing", grad: "from-accent/30 to-primary/40" },
+  { name: "Iron Loft", city: "Brooklyn", price: 14, rating: 4.9, tag: "Strength" },
+  { name: "Neon Athletic", city: "SoHo", price: 22, rating: 4.8, tag: "Boutique" },
+  { name: "Pulse Studio", city: "Williamsburg", price: 18, rating: 4.9, tag: "HIIT" },
+  { name: "Vertex Climb", city: "Queens", price: 26, rating: 4.7, tag: "Climbing" },
+  { name: "Aqua Prime", city: "Manhattan", price: 30, rating: 4.9, tag: "Pool & Spa" },
+  { name: "Ronin Boxing", city: "LES", price: 20, rating: 4.8, tag: "Boxing" },
 ];
 
 function FeaturedGyms() {
@@ -249,44 +248,43 @@ function FeaturedGyms() {
     <section id="gyms" className="relative py-24">
       <div className="mx-auto max-w-6xl px-4">
         <Reveal>
-          <div className="flex items-end justify-between mb-10 flex-wrap gap-4">
+          <div className="flex items-end justify-between mb-12 flex-wrap gap-4">
             <div>
-              <div className="text-sm text-primary font-semibold mb-2">Featured</div>
-              <h2 className="text-4xl md:text-5xl font-bold">Premium gyms, on demand</h2>
+              <div className="text-xs uppercase tracking-[0.2em] text-muted-foreground font-semibold mb-3">Featured</div>
+              <h2 className="text-4xl md:text-5xl font-bold">Premium gyms,<br />on demand.</h2>
             </div>
-            <a href="#" className="text-sm text-muted-foreground hover:text-foreground inline-flex items-center gap-1">
+            <a href="#" className="text-sm text-foreground inline-flex items-center gap-1 border-b border-foreground/30 pb-0.5 hover:border-foreground">
               View all <ArrowRight className="w-4 h-4" />
             </a>
           </div>
         </Reveal>
 
-        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-8">
           {gyms.map((g, i) => (
-            <Reveal key={g.name} delay={i * 80}>
-              <div className="glass hover-lift rounded-3xl overflow-hidden group cursor-pointer">
-                <div className={`relative h-44 bg-gradient-to-br ${g.grad} overflow-hidden`}>
-                  <div className="absolute inset-0 opacity-40 bg-[radial-gradient(circle_at_30%_30%,white,transparent_50%)]" />
-                  <Dumbbell className="absolute right-4 bottom-4 w-16 h-16 text-foreground/20 group-hover:scale-110 group-hover:rotate-6 transition-transform duration-500" />
-                  <div className="absolute top-4 left-4 glass rounded-full px-3 py-1 text-xs">{g.tag}</div>
+            <Reveal key={g.name} delay={i * 70}>
+              <div className="clay hover-lift p-3 group cursor-pointer">
+                <div className="relative h-44 clay-inset rounded-3xl overflow-hidden grid place-items-center">
+                  <Dumbbell className="w-20 h-20 text-foreground/15 group-hover:scale-110 group-hover:rotate-6 transition-transform duration-500" />
+                  <div className="absolute top-3 left-3 clay-sm rounded-full px-3 py-1 text-[11px] font-medium">{g.tag}</div>
                 </div>
-                <div className="p-5">
-                  <div className="flex items-start justify-between">
-                    <div>
-                      <div className="font-semibold text-lg">{g.name}</div>
+                <div className="p-4">
+                  <div className="flex items-start justify-between gap-2">
+                    <div className="min-w-0">
+                      <div className="font-semibold text-lg truncate">{g.name}</div>
                       <div className="text-sm text-muted-foreground flex items-center gap-1 mt-0.5">
                         <MapPin className="w-3 h-3" /> {g.city}
                       </div>
                     </div>
-                    <div className="flex items-center gap-1 text-sm">
-                      <Star className="w-4 h-4 fill-primary text-primary" /> {g.rating}
+                    <div className="flex items-center gap-1 text-sm shrink-0">
+                      <Star className="w-4 h-4 fill-foreground text-foreground" /> {g.rating}
                     </div>
                   </div>
-                  <div className="mt-4 flex items-center justify-between">
+                  <div className="mt-5 flex items-center justify-between">
                     <div>
-                      <span className="text-2xl font-bold text-gradient">${g.price}</span>
+                      <span className="text-2xl font-bold">${g.price}</span>
                       <span className="text-xs text-muted-foreground"> / day</span>
                     </div>
-                    <button className="glass hover:bg-primary hover:text-primary-foreground transition-all rounded-xl px-3 py-1.5 text-xs font-semibold">
+                    <button className="btn-clay px-4 py-2 text-xs font-semibold">
                       Book pass
                     </button>
                   </div>
@@ -314,17 +312,17 @@ function Benefits() {
       <div className="mx-auto max-w-6xl px-4">
         <Reveal>
           <div className="text-center max-w-2xl mx-auto mb-14">
-            <div className="text-sm text-primary font-semibold mb-2">Why DayPass</div>
-            <h2 className="text-4xl md:text-5xl font-bold">Freedom to train, everywhere</h2>
-            <p className="mt-4 text-muted-foreground">Membership without the membership. Your workout, your way.</p>
+            <div className="text-xs uppercase tracking-[0.2em] text-muted-foreground font-semibold mb-3">Why DayPass</div>
+            <h2 className="text-4xl md:text-5xl font-bold">Freedom to train,<br />everywhere.</h2>
+            <p className="mt-5 text-muted-foreground">Membership without the membership. Your workout, your way.</p>
           </div>
         </Reveal>
         <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
           {benefits.map((b, i) => (
-            <Reveal key={b.title} delay={i * 80}>
-              <div className="glass hover-lift rounded-3xl p-6 h-full">
-                <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-primary to-accent grid place-items-center mb-4">
-                  <b.icon className="w-6 h-6 text-primary-foreground" />
+            <Reveal key={b.title} delay={i * 70}>
+              <div className="clay hover-lift p-7 h-full">
+                <div className="w-14 h-14 rounded-2xl bg-foreground grid place-items-center mb-5">
+                  <b.icon className="w-6 h-6 text-background" />
                 </div>
                 <div className="font-semibold text-lg">{b.title}</div>
                 <p className="text-sm text-muted-foreground mt-2 leading-relaxed">{b.desc}</p>
@@ -350,17 +348,17 @@ function HowItWorks() {
       <div className="mx-auto max-w-6xl px-4">
         <Reveal>
           <div className="text-center max-w-2xl mx-auto mb-14">
-            <div className="text-sm text-primary font-semibold mb-2">How it works</div>
-            <h2 className="text-4xl md:text-5xl font-bold">Three steps to your next workout</h2>
+            <div className="text-xs uppercase tracking-[0.2em] text-muted-foreground font-semibold mb-3">How it works</div>
+            <h2 className="text-4xl md:text-5xl font-bold">Three steps to<br />your next workout.</h2>
           </div>
         </Reveal>
-        <div className="grid md:grid-cols-3 gap-6 relative">
+        <div className="grid md:grid-cols-3 gap-6">
           {steps.map((s, i) => (
-            <Reveal key={s.n} delay={i * 120}>
-              <div className="glass hover-lift rounded-3xl p-8 h-full relative overflow-hidden">
-                <div className="absolute -top-6 -right-4 text-7xl font-black text-gradient opacity-30">{s.n}</div>
-                <div className="w-12 h-12 rounded-2xl glass-strong grid place-items-center mb-4">
-                  <s.icon className="w-6 h-6 text-primary" />
+            <Reveal key={s.n} delay={i * 100}>
+              <div className="clay hover-lift p-8 h-full relative overflow-hidden">
+                <div className="absolute -top-4 right-4 text-8xl font-black text-foreground/5 leading-none">{s.n}</div>
+                <div className="w-14 h-14 rounded-2xl clay-inset grid place-items-center mb-5">
+                  <s.icon className="w-6 h-6 text-foreground" />
                 </div>
                 <div className="font-semibold text-xl">{s.title}</div>
                 <p className="text-sm text-muted-foreground mt-2 leading-relaxed">{s.desc}</p>
@@ -386,10 +384,10 @@ function Stats() {
     <section className="relative py-16">
       <div className="mx-auto max-w-6xl px-4">
         <Reveal>
-          <div className="glass-strong rounded-3xl p-10 grid grid-cols-2 md:grid-cols-4 gap-8">
+          <div className="clay-lg p-12 grid grid-cols-2 md:grid-cols-4 gap-8">
             {stats.map((s) => (
               <div key={s.l} className="text-center">
-                <div className="text-4xl md:text-5xl font-bold text-gradient">{s.v}</div>
+                <div className="text-4xl md:text-5xl font-bold">{s.v}</div>
                 <div className="mt-2 text-sm text-muted-foreground">{s.l}</div>
               </div>
             ))}
@@ -413,20 +411,22 @@ function Testimonials() {
       <div className="mx-auto max-w-6xl px-4">
         <Reveal>
           <div className="text-center max-w-2xl mx-auto mb-14">
-            <div className="text-sm text-primary font-semibold mb-2">Loved by athletes</div>
-            <h2 className="text-4xl md:text-5xl font-bold">Real training, real freedom</h2>
+            <div className="text-xs uppercase tracking-[0.2em] text-muted-foreground font-semibold mb-3">Loved by athletes</div>
+            <h2 className="text-4xl md:text-5xl font-bold">Real training,<br />real freedom.</h2>
           </div>
         </Reveal>
         <div className="grid md:grid-cols-3 gap-6">
           {testimonials.map((t, i) => (
-            <Reveal key={t.n} delay={i * 100}>
-              <div className="glass hover-lift rounded-3xl p-6 h-full">
+            <Reveal key={t.n} delay={i * 90}>
+              <div className="clay hover-lift p-7 h-full">
                 <div className="flex items-center gap-0.5 mb-4">
-                  {[...Array(5)].map((_, i) => <Star key={i} className="w-4 h-4 fill-primary text-primary" />)}
+                  {[...Array(5)].map((_, i) => <Star key={i} className="w-4 h-4 fill-foreground text-foreground" />)}
                 </div>
-                <p className="text-foreground/90 leading-relaxed">"{t.q}"</p>
+                <p className="leading-relaxed">"{t.q}"</p>
                 <div className="mt-6 flex items-center gap-3">
-                  <div className="w-10 h-10 rounded-full bg-gradient-to-br from-primary to-accent" />
+                  <div className="w-11 h-11 rounded-full bg-card grid place-items-center" style={{ boxShadow: "var(--shadow-clay-sm)" }}>
+                    <div className="w-4 h-4 rounded-full bg-foreground/80" />
+                  </div>
                   <div>
                     <div className="text-sm font-semibold">{t.n}</div>
                     <div className="text-xs text-muted-foreground">{t.r}</div>
@@ -457,27 +457,26 @@ function FAQ() {
       <div className="mx-auto max-w-3xl px-4">
         <Reveal>
           <div className="text-center mb-12">
-            <div className="text-sm text-primary font-semibold mb-2">FAQ</div>
-            <h2 className="text-4xl md:text-5xl font-bold">Questions, answered</h2>
+            <div className="text-xs uppercase tracking-[0.2em] text-muted-foreground font-semibold mb-3">FAQ</div>
+            <h2 className="text-4xl md:text-5xl font-bold">Questions, answered.</h2>
           </div>
         </Reveal>
-        <div className="space-y-3">
+        <div className="space-y-4">
           {faqs.map((f, i) => (
             <Reveal key={f.q} delay={i * 60}>
-              <div className="glass rounded-2xl overflow-hidden">
+              <div className="clay overflow-hidden">
                 <button
                   onClick={() => setOpen(open === i ? null : i)}
-                  className="w-full flex items-center justify-between p-5 text-left"
+                  className="w-full flex items-center justify-between p-6 text-left"
                 >
                   <span className="font-semibold">{f.q}</span>
-                  <ChevronDown className={`w-5 h-5 transition-transform ${open === i ? "rotate-180" : ""}`} />
+                  <div className="w-8 h-8 rounded-full clay-sm grid place-items-center shrink-0">
+                    <ChevronDown className={`w-4 h-4 transition-transform ${open === i ? "rotate-180" : ""}`} />
+                  </div>
                 </button>
-                <div
-                  className="px-5 grid transition-all duration-300"
-                  style={{ gridTemplateRows: open === i ? "1fr" : "0fr" }}
-                >
+                <div className="px-6 grid transition-all duration-300" style={{ gridTemplateRows: open === i ? "1fr" : "0fr" }}>
                   <div className="overflow-hidden">
-                    <p className="pb-5 text-muted-foreground text-sm leading-relaxed">{f.a}</p>
+                    <p className="pb-6 text-muted-foreground text-sm leading-relaxed">{f.a}</p>
                   </div>
                 </div>
               </div>
@@ -495,33 +494,32 @@ function FinalCTA() {
     <section className="relative py-24">
       <div className="mx-auto max-w-5xl px-4">
         <Reveal>
-          <div className="relative glass-strong rounded-[2rem] p-12 md:p-16 text-center overflow-hidden">
-            <div className="glow-orb w-[500px] h-[500px] bg-primary/40 -top-40 -left-20 animate-pulse-glow" />
-            <div className="glow-orb w-[500px] h-[500px] bg-accent/40 -bottom-40 -right-20 animate-pulse-glow" />
-            <div className="relative">
-              <div className="inline-flex items-center gap-2 glass rounded-full px-3 py-1.5 text-xs text-muted-foreground mb-6">
-                <Clock className="w-3.5 h-3.5 text-primary" /> Takes 30 seconds
-              </div>
-              <h2 className="text-4xl md:text-6xl font-bold leading-tight">
-                Your next workout <br />
-                is <span className="text-gradient">one tap away</span>
-              </h2>
-              <p className="mt-6 text-muted-foreground max-w-xl mx-auto">
-                Join 120,000+ athletes who train wherever they want, whenever they want.
-              </p>
-              <div className="mt-8 flex flex-wrap justify-center gap-3">
-                <Link to="/login" className="btn-primary-glow inline-flex items-center gap-2 rounded-xl px-8 py-4 font-semibold">
-                  Get Started <ArrowRight className="w-4 h-4" />
-                </Link>
-                <a href="#gyms" className="glass hover-lift inline-flex items-center gap-2 rounded-xl px-8 py-4 font-semibold">
-                  Explore Gyms
-                </a>
-              </div>
-              <div className="mt-8 flex items-center justify-center gap-6 text-xs text-muted-foreground">
-                <div className="flex items-center gap-1.5"><ShieldCheck className="w-4 h-4 text-primary" /> No commitment</div>
-                <div className="flex items-center gap-1.5"><Zap className="w-4 h-4 text-primary" /> Instant access</div>
-                <div className="flex items-center gap-1.5"><Users className="w-4 h-4 text-primary" /> 120k+ members</div>
-              </div>
+          <div className="clay-dark p-12 md:p-20 text-center relative overflow-hidden">
+            <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full text-xs text-background/70 mb-6"
+              style={{ boxShadow: "inset 2px 2px 6px rgba(0,0,0,0.6), inset -2px -2px 6px rgba(255,255,255,0.05)" }}>
+              <Clock className="w-3.5 h-3.5" /> Takes 30 seconds
+            </div>
+            <h2 className="text-4xl md:text-6xl font-bold leading-tight text-background">
+              Your next workout<br />
+              is <span className="italic font-light">one tap away.</span>
+            </h2>
+            <p className="mt-6 text-background/60 max-w-xl mx-auto">
+              Join 120,000+ athletes who train wherever they want, whenever they want.
+            </p>
+            <div className="mt-8 flex flex-wrap justify-center gap-3">
+              <Link to="/login" className="inline-flex items-center gap-2 px-8 py-4 font-semibold rounded-full bg-background text-foreground transition-transform hover:-translate-y-0.5"
+                style={{ boxShadow: "-4px -4px 10px rgba(255,255,255,0.06), 6px 6px 16px rgba(0,0,0,0.5)" }}>
+                Get Started <ArrowRight className="w-4 h-4" />
+              </Link>
+              <a href="#gyms" className="inline-flex items-center gap-2 px-8 py-4 font-semibold rounded-full text-background transition-transform hover:-translate-y-0.5"
+                style={{ boxShadow: "-4px -4px 10px rgba(255,255,255,0.06), 6px 6px 16px rgba(0,0,0,0.5)" }}>
+                Explore Gyms
+              </a>
+            </div>
+            <div className="mt-10 flex flex-wrap items-center justify-center gap-6 text-xs text-background/50">
+              <div className="flex items-center gap-1.5"><ShieldCheck className="w-4 h-4" /> No commitment</div>
+              <div className="flex items-center gap-1.5"><Zap className="w-4 h-4" /> Instant access</div>
+              <div className="flex items-center gap-1.5"><Users className="w-4 h-4" /> 120k+ members</div>
             </div>
           </div>
         </Reveal>
@@ -535,10 +533,12 @@ function Footer() {
   return (
     <footer className="relative pt-16 pb-8">
       <div className="mx-auto max-w-6xl px-4">
-        <div className="glass rounded-3xl p-10 grid md:grid-cols-4 gap-8">
+        <div className="clay p-10 grid md:grid-cols-4 gap-8">
           <div>
-            <div className="flex items-center gap-2">
-              <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-primary to-accent" />
+            <div className="flex items-center gap-2.5">
+              <div className="w-8 h-8 rounded-2xl bg-foreground grid place-items-center">
+                <div className="w-3 h-3 rounded-md bg-background" />
+              </div>
               <span className="font-display font-bold text-lg">DayPass</span>
             </div>
             <p className="mt-4 text-sm text-muted-foreground max-w-xs">
