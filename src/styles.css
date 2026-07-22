@@ -42,8 +42,8 @@
 :root {
   --radius: 1.25rem;
 
-  --background: oklch(0.955 0 0);        /* soft off-white canvas */
-  --foreground: oklch(0.15 0 0);         /* near-black text */
+  --background: oklch(0.955 0 0); /* soft off-white canvas */
+  --foreground: oklch(0.15 0 0); /* near-black text */
 
   --card: oklch(0.97 0 0);
   --card-foreground: oklch(0.15 0 0);
@@ -51,7 +51,7 @@
   --popover: oklch(0.97 0 0);
   --popover-foreground: oklch(0.15 0 0);
 
-  --primary: oklch(0.15 0 0);            /* black */
+  --primary: oklch(0.15 0 0); /* black */
   --primary-foreground: oklch(0.98 0 0);
 
   --secondary: oklch(0.92 0 0);
@@ -71,21 +71,12 @@
   --ring: oklch(0.15 0 0 / 30%);
 
   /* Claymorphic shadows — light top-left, dark bottom-right */
-  --shadow-clay:
-    -10px -10px 24px oklch(1 0 0 / 0.9),
-    12px 12px 28px oklch(0 0 0 / 0.10);
-  --shadow-clay-sm:
-    -4px -4px 10px oklch(1 0 0 / 0.9),
-    6px 6px 14px oklch(0 0 0 / 0.08);
-  --shadow-clay-lg:
-    -16px -16px 36px oklch(1 0 0 / 0.95),
-    20px 20px 42px oklch(0 0 0 / 0.14);
+  --shadow-clay: -10px -10px 24px oklch(1 0 0 / 0.9), 12px 12px 28px oklch(0 0 0 / 0.1);
+  --shadow-clay-sm: -4px -4px 10px oklch(1 0 0 / 0.9), 6px 6px 14px oklch(0 0 0 / 0.08);
+  --shadow-clay-lg: -16px -16px 36px oklch(1 0 0 / 0.95), 20px 20px 42px oklch(0 0 0 / 0.14);
   --shadow-clay-inset:
-    inset 4px 4px 10px oklch(0 0 0 / 0.08),
-    inset -4px -4px 10px oklch(1 0 0 / 0.9);
-  --shadow-clay-dark:
-    -8px -8px 20px oklch(0.28 0 0),
-    12px 12px 28px oklch(0 0 0 / 0.6);
+    inset 4px 4px 10px oklch(0 0 0 / 0.08), inset -4px -4px 10px oklch(1 0 0 / 0.9);
+  --shadow-clay-dark: -8px -8px 20px oklch(0.28 0 0), 12px 12px 28px oklch(0 0 0 / 0.6);
 
   --transition-smooth: cubic-bezier(0.22, 1, 0.36, 1);
 }
@@ -103,7 +94,10 @@
     font-family: var(--font-sans);
     -webkit-font-smoothing: antialiased;
   }
-  h1, h2, h3, h4 {
+  h1,
+  h2,
+  h3,
+  h4 {
     font-family: var(--font-display);
     letter-spacing: -0.025em;
   }
@@ -150,8 +144,9 @@
     -4px -4px 10px oklch(1 0 0 / 0.9),
     6px 6px 16px oklch(0 0 0 / 0.18),
     inset 0 1px 0 oklch(1 0 0 / 0.08);
-  transition: transform 0.35s var(--transition-smooth),
-              box-shadow 0.35s var(--transition-smooth);
+  transition:
+    transform 0.35s var(--transition-smooth),
+    box-shadow 0.35s var(--transition-smooth);
   &:hover {
     transform: translateY(-2px);
     box-shadow:
@@ -171,8 +166,9 @@
   color: var(--foreground);
   border-radius: 999px;
   box-shadow: var(--shadow-clay-sm);
-  transition: transform 0.35s var(--transition-smooth),
-              box-shadow 0.35s var(--transition-smooth);
+  transition:
+    transform 0.35s var(--transition-smooth),
+    box-shadow 0.35s var(--transition-smooth);
   &:hover {
     transform: translateY(-2px);
     box-shadow: var(--shadow-clay);
@@ -184,8 +180,9 @@
 }
 
 @utility hover-lift {
-  transition: transform 0.4s var(--transition-smooth),
-              box-shadow 0.4s var(--transition-smooth);
+  transition:
+    transform 0.4s var(--transition-smooth),
+    box-shadow 0.4s var(--transition-smooth);
   &:hover {
     transform: translateY(-6px);
     box-shadow: var(--shadow-clay-lg);
@@ -202,18 +199,40 @@
 }
 
 @keyframes float {
-  0%, 100% { transform: translateY(0) rotate(0deg); }
-  50% { transform: translateY(-16px) rotate(1.5deg); }
+  0%,
+  100% {
+    transform: translateY(0) rotate(0deg);
+  }
+  50% {
+    transform: translateY(-16px) rotate(1.5deg);
+  }
 }
 @keyframes float-slow {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-10px); }
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
 }
 @keyframes reveal {
-  from { opacity: 0; transform: translateY(20px); }
-  to { opacity: 1; transform: translateY(0); }
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
-@utility animate-float { animation: float 7s ease-in-out infinite; }
-@utility animate-float-slow { animation: float-slow 9s ease-in-out infinite; }
-@utility animate-reveal { animation: reveal 0.8s var(--transition-smooth) both; }
+@utility animate-float {
+  animation: float 7s ease-in-out infinite;
+}
+@utility animate-float-slow {
+  animation: float-slow 9s ease-in-out infinite;
+}
+@utility animate-reveal {
+  animation: reveal 0.8s var(--transition-smooth) both;
+}
