@@ -15,6 +15,7 @@ import { Route as DashboardRouteImport } from './routes/dashboard'
 import { Route as LoginRouteImport } from './routes/login'
 import { Route as RegisterRouteImport } from './routes/register'
 import { Route as SearchRouteImport } from './routes/search'
+import { Route as VerifyRouteImport } from './routes/verify'
 import { Route as GymGymIdRouteImport } from './routes/gym/$gymId'
 
 const IndexRoute = IndexRouteImport.update({
@@ -47,6 +48,11 @@ const SearchRoute = SearchRouteImport.update({
   path: '/search',
   getParentRoute: () => rootRouteImport,
 } as any)
+const VerifyRoute = VerifyRouteImport.update({
+  id: '/verify',
+  path: '/verify',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const GymGymIdRoute = GymGymIdRouteImport.update({
   id: '/gym/$gymId',
   path: '/gym/$gymId',
@@ -60,6 +66,7 @@ export interface FileRoutesByFullPath {
   '/login': typeof LoginRoute
   '/register': typeof RegisterRoute
   '/search': typeof SearchRoute
+  '/verify': typeof VerifyRoute
   '/gym/$gymId': typeof GymGymIdRoute
 }
 export interface FileRoutesByTo {
@@ -69,6 +76,7 @@ export interface FileRoutesByTo {
   '/login': typeof LoginRoute
   '/register': typeof RegisterRoute
   '/search': typeof SearchRoute
+  '/verify': typeof VerifyRoute
   '/gym/$gymId': typeof GymGymIdRoute
 }
 export interface FileRoutesById {
@@ -79,6 +87,7 @@ export interface FileRoutesById {
   '/login': typeof LoginRoute
   '/register': typeof RegisterRoute
   '/search': typeof SearchRoute
+  '/verify': typeof VerifyRoute
   '/gym/$gymId': typeof GymGymIdRoute
 }
 export interface FileRouteTypes {
@@ -90,6 +99,7 @@ export interface FileRouteTypes {
     | '/login'
     | '/register'
     | '/search'
+    | '/verify'
     | '/gym/$gymId'
   fileRoutesByTo: FileRoutesByTo
   to:
@@ -99,6 +109,7 @@ export interface FileRouteTypes {
     | '/login'
     | '/register'
     | '/search'
+    | '/verify'
     | '/gym/$gymId'
   id:
     | '__root__'
@@ -108,6 +119,7 @@ export interface FileRouteTypes {
     | '/login'
     | '/register'
     | '/search'
+    | '/verify'
     | '/gym/$gymId'
   fileRoutesById: FileRoutesById
 }
@@ -118,6 +130,7 @@ export interface RootRouteChildren {
   LoginRoute: typeof LoginRoute
   RegisterRoute: typeof RegisterRoute
   SearchRoute: typeof SearchRoute
+  VerifyRoute: typeof VerifyRoute
   GymGymIdRoute: typeof GymGymIdRoute
 }
 
@@ -165,6 +178,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof SearchRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/verify': {
+      id: '/verify'
+      path: '/verify'
+      fullPath: '/verify'
+      preLoaderRoute: typeof VerifyRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/gym/$gymId': {
       id: '/gym/$gymId'
       path: '/gym/$gymId'
@@ -182,6 +202,7 @@ const rootRouteChildren: RootRouteChildren = {
   LoginRoute: LoginRoute,
   RegisterRoute: RegisterRoute,
   SearchRoute: SearchRoute,
+  VerifyRoute: VerifyRoute,
   GymGymIdRoute: GymGymIdRoute,
 }
 export const routeTree = rootRouteImport
