@@ -760,7 +760,8 @@ function FinalCTA() {
                   to="/dashboard"
                   className="inline-flex items-center gap-2 px-8 py-4 font-semibold rounded-full bg-white text-black transition-transform hover:-translate-y-0.5"
                   style={{
-                    boxShadow: "-4px -4px 10px rgba(255,255,255,0.06), 6px 6px 16px rgba(0,0,0,0.5)",
+                    boxShadow:
+                      "-4px -4px 10px rgba(255,255,255,0.06), 6px 6px 16px rgba(0,0,0,0.5)",
                   }}
                 >
                   Dashboard <ArrowRight className="w-4 h-4" />
@@ -771,7 +772,8 @@ function FinalCTA() {
                   search={{ redirect: undefined }}
                   className="inline-flex items-center gap-2 px-8 py-4 font-semibold rounded-full bg-white text-black transition-transform hover:-translate-y-0.5"
                   style={{
-                    boxShadow: "-4px -4px 10px rgba(255,255,255,0.06), 6px 6px 16px rgba(0,0,0,0.5)",
+                    boxShadow:
+                      "-4px -4px 10px rgba(255,255,255,0.06), 6px 6px 16px rgba(0,0,0,0.5)",
                   }}
                 >
                   Get Started <ArrowRight className="w-4 h-4" />
