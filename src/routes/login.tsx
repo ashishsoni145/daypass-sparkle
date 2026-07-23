@@ -8,6 +8,11 @@ import { useAuth } from "@/lib/auth-context";
 import { useState } from "react";
 
 export const Route = createFileRoute("/login")({
+  validateSearch: (search: Record<string, unknown>) => {
+    return {
+      redirect: search.redirect as string | undefined,
+    };
+  },
   head: () => ({
     meta: [
       { title: "Login — DayPass" },
@@ -29,6 +34,7 @@ type LoginFormValues = z.infer<typeof loginSchema>;
 function LoginPage() {
   const { login } = useAuth();
   const router = useRouter();
+  const search = Route.useSearch();
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   const {
@@ -48,7 +54,12 @@ function LoginPage() {
     if (data.email === "test@example.com" && data.password === "password") {
       login({ id: "1", name: "Test User", email: data.email });
       toast.success("Successfully logged in!");
-      router.navigate({ to: "/dashboard" });
+      if (search.redirect) {
+        // use window.location.href or an external redirect logic since we don't know if redirect is a valid typed route
+        window.location.href = search.redirect;
+      } else {
+        router.navigate({ to: "/dashboard" });
+      }
     } else {
       toast.error("Invalid credentials. Try test@example.com / password");
     }

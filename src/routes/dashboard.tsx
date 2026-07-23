@@ -20,7 +20,7 @@ function DashboardPage() {
 
   useEffect(() => {
     if (!isAuthLoading && !user) {
-      navigate({ to: "/login" });
+      navigate({ to: "/login", search: { redirect: undefined } });
     }
   }, [isAuthLoading, user, navigate]);
 
@@ -127,7 +127,8 @@ function DashboardPage() {
                     View QR Code
                   </button>
                   <Link
-                    to={`/gym/${activePass.id}`}
+                    to="/gym/$gymId"
+                    params={{ gymId: activePass.id }}
                     className="btn-clay-ghost px-6 py-2 text-sm font-semibold flex-1 sm:flex-none justify-center"
                   >
                     Gym Details

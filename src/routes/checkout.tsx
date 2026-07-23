@@ -96,7 +96,8 @@ function CheckoutPage() {
       <header className="bg-background/80 backdrop-blur-md border-b sticky top-0 z-50">
         <div className="mx-auto max-w-4xl px-4 h-16 flex items-center justify-between">
           <Link
-            to={`/gym/${gymId}`}
+            to="/gym/$gymId"
+            params={{ gymId }}
             className="flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground"
           >
             <ArrowLeft className="w-4 h-4" /> Back to Gym

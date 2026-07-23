@@ -119,12 +119,14 @@ function Navbar() {
             </button>
             <Link
               to="/login"
+              search={{ redirect: undefined }}
               className="hidden sm:inline text-sm text-muted-foreground hover:text-foreground px-3"
             >
               Sign in
             </Link>
             <Link
               to="/login"
+              search={{ redirect: undefined }}
               className="btn-clay hidden sm:inline-flex items-center gap-1.5 px-4 py-2 text-sm font-semibold"
             >
               Get Started <ArrowRight className="w-4 h-4" />
@@ -152,6 +154,7 @@ function Navbar() {
             ))}
             <Link
               to="/login"
+              search={{ redirect: undefined }}
               className="btn-clay mt-3 inline-flex w-full items-center justify-center gap-1.5 px-4 py-3 text-sm font-semibold"
             >
               Get Started <ArrowRight className="w-4 h-4" />
@@ -197,6 +200,7 @@ function Hero() {
             <div className="mt-8 flex flex-wrap items-center gap-3">
               <Link
                 to="/login"
+                search={{ redirect: undefined }}
                 className="btn-clay inline-flex items-center gap-2 px-7 py-4 font-semibold"
               >
                 Get Started <ArrowRight className="w-4 h-4" />
@@ -704,6 +708,7 @@ function FinalCTA() {
             <div className="mt-8 flex flex-wrap justify-center gap-3">
               <Link
                 to="/login"
+                search={{ redirect: undefined }}
                 className="inline-flex items-center gap-2 px-8 py-4 font-semibold rounded-full bg-background text-foreground transition-transform hover:-translate-y-0.5"
                 style={{
                   boxShadow: "-4px -4px 10px rgba(255,255,255,0.06), 6px 6px 16px rgba(0,0,0,0.5)",
