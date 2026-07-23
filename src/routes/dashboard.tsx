@@ -1,9 +1,19 @@
-import { createFileRoute, useNavigate, Link } from "@tanstack/react-router";
+import { createFileRoute, useNavigate, Link, redirect } from "@tanstack/react-router";
 import { useAuth } from "@/lib/auth-context";
 import { Loader2, LogOut, Ticket, Settings, History, MapPin, X } from "lucide-react";
 import { useEffect, useState } from "react";
+import { supabase } from "@/lib/supabase";
 
 export const Route = createFileRoute("/dashboard")({
+  beforeLoad: async () => {
+    const { data } = await supabase.auth.getSession();
+    if (!data.session) {
+      throw redirect({
+        to: "/login",
+        search: { redirect: "/dashboard" },
+      });
+    }
+  },
   component: DashboardPage,
 });
 
@@ -25,17 +35,13 @@ function DashboardPage() {
   const [qrModalOpen, setQrModalOpen] = useState<string | null>(null);
 
   useEffect(() => {
-    if (!isAuthLoading && !user) {
-      navigate({ to: "/login", search: { redirect: undefined } });
-    }
-
     // Load passes from local storage
     if (typeof window !== "undefined") {
       const passes = JSON.parse(localStorage.getItem("bookedPasses") || "[]");
       setBookedPasses(passes);
       setIsLoadingPasses(false);
     }
-  }, [isAuthLoading, user, navigate]);
+  }, []);
 
   if (isAuthLoading) {
     return (
@@ -49,8 +55,8 @@ function DashboardPage() {
     return null;
   }
 
-  const handleLogout = () => {
-    logout();
+  const handleLogout = async () => {
+    await logout();
     import("sonner").then((m) => m.toast("Successfully logged out."));
     navigate({ to: "/" });
   };
