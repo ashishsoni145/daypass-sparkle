@@ -198,6 +198,7 @@ function Navbar() {
 
 /* ---------------- Hero ---------------- */
 function Hero() {
+  const { user } = useAuth();
   return (
     <section id="top" className="relative pt-40 pb-24 overflow-hidden">
       <div className="clay-blob w-[420px] h-[420px] -top-40 -left-40 opacity-60" />
@@ -228,13 +229,22 @@ function Hero() {
           </Reveal>
           <Reveal delay={300}>
             <div className="mt-8 flex flex-wrap items-center gap-3">
-              <Link
-                to="/login"
-                search={{ redirect: undefined }}
-                className="btn-clay inline-flex items-center gap-2 px-7 py-4 font-semibold"
-              >
-                Get Started <ArrowRight className="w-4 h-4" />
-              </Link>
+              {user ? (
+                <Link
+                  to="/dashboard"
+                  className="btn-clay inline-flex items-center gap-2 px-7 py-4 font-semibold"
+                >
+                  Dashboard <ArrowRight className="w-4 h-4" />
+                </Link>
+              ) : (
+                <Link
+                  to="/login"
+                  search={{ redirect: undefined }}
+                  className="btn-clay inline-flex items-center gap-2 px-7 py-4 font-semibold"
+                >
+                  Get Started <ArrowRight className="w-4 h-4" />
+                </Link>
+              )}
               <a
                 href="#gyms"
                 className="btn-clay-ghost inline-flex items-center gap-2 px-7 py-4 font-semibold"
@@ -366,6 +376,8 @@ const gyms = [
 ];
 
 function FeaturedGyms() {
+  const { user } = useAuth();
+
   return (
     <section id="gyms" className="relative py-24">
       <div className="mx-auto max-w-6xl px-4">
@@ -719,13 +731,14 @@ function FAQ() {
 
 /* ---------------- Final CTA ---------------- */
 function FinalCTA() {
+  const { user } = useAuth();
   return (
     <section className="relative py-24">
       <div className="mx-auto max-w-5xl px-4">
         <Reveal>
           <div className="clay-dark p-12 md:p-20 text-center relative overflow-hidden">
             <div
-              className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full text-xs text-background/70 mb-6"
+              className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full text-xs text-white/70 mb-6"
               style={{
                 boxShadow:
                   "inset 2px 2px 6px rgba(0,0,0,0.6), inset -2px -2px 6px rgba(255,255,255,0.05)",
@@ -733,28 +746,40 @@ function FinalCTA() {
             >
               <Clock className="w-3.5 h-3.5" /> Takes 30 seconds
             </div>
-            <h2 className="text-4xl md:text-6xl font-bold leading-tight text-background">
+            <h2 className="text-4xl md:text-6xl font-bold leading-tight text-white">
               Your next workout
               <br />
               is <span className="italic font-light">one tap away.</span>
             </h2>
-            <p className="mt-6 text-background/60 max-w-xl mx-auto">
+            <p className="mt-6 text-white/60 max-w-xl mx-auto">
               Join 120,000+ athletes who train wherever they want, whenever they want.
             </p>
             <div className="mt-8 flex flex-wrap justify-center gap-3">
-              <Link
-                to="/login"
-                search={{ redirect: undefined }}
-                className="inline-flex items-center gap-2 px-8 py-4 font-semibold rounded-full bg-background text-foreground transition-transform hover:-translate-y-0.5"
-                style={{
-                  boxShadow: "-4px -4px 10px rgba(255,255,255,0.06), 6px 6px 16px rgba(0,0,0,0.5)",
-                }}
-              >
-                Get Started <ArrowRight className="w-4 h-4" />
-              </Link>
+              {user ? (
+                <Link
+                  to="/dashboard"
+                  className="inline-flex items-center gap-2 px-8 py-4 font-semibold rounded-full bg-white text-black transition-transform hover:-translate-y-0.5"
+                  style={{
+                    boxShadow: "-4px -4px 10px rgba(255,255,255,0.06), 6px 6px 16px rgba(0,0,0,0.5)",
+                  }}
+                >
+                  Dashboard <ArrowRight className="w-4 h-4" />
+                </Link>
+              ) : (
+                <Link
+                  to="/login"
+                  search={{ redirect: undefined }}
+                  className="inline-flex items-center gap-2 px-8 py-4 font-semibold rounded-full bg-white text-black transition-transform hover:-translate-y-0.5"
+                  style={{
+                    boxShadow: "-4px -4px 10px rgba(255,255,255,0.06), 6px 6px 16px rgba(0,0,0,0.5)",
+                  }}
+                >
+                  Get Started <ArrowRight className="w-4 h-4" />
+                </Link>
+              )}
               <a
                 href="#gyms"
-                className="inline-flex items-center gap-2 px-8 py-4 font-semibold rounded-full text-background transition-transform hover:-translate-y-0.5"
+                className="inline-flex items-center gap-2 px-8 py-4 font-semibold rounded-full text-white transition-transform hover:-translate-y-0.5"
                 style={{
                   boxShadow: "-4px -4px 10px rgba(255,255,255,0.06), 6px 6px 16px rgba(0,0,0,0.5)",
                 }}
@@ -762,7 +787,7 @@ function FinalCTA() {
                 Explore Gyms
               </a>
             </div>
-            <div className="mt-10 flex flex-wrap items-center justify-center gap-6 text-xs text-background/50">
+            <div className="mt-10 flex flex-wrap items-center justify-center gap-6 text-xs text-white/50">
               <div className="flex items-center gap-1.5">
                 <ShieldCheck className="w-4 h-4" /> No commitment
               </div>
