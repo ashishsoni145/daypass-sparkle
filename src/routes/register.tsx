@@ -34,9 +34,9 @@ const registerSchema = z
 type RegisterFormValues = z.infer<typeof registerSchema>;
 
 function RegisterPage() {
-  const { login } = useAuth();
   const router = useRouter();
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isSuccess, setIsSuccess] = useState(false);
 
   const {
     register,
@@ -48,14 +48,66 @@ function RegisterPage() {
 
   const onSubmit = async (data: RegisterFormValues) => {
     setIsSubmitting(true);
-    // Simulate API call
-    await new Promise((resolve) => setTimeout(resolve, 1000));
+
+    // Dynamically import supabase
+    const { supabase } = await import("@/lib/supabase");
+
+    const { error } = await supabase.auth.signUp({
+      email: data.email,
+      password: data.password,
+      options: {
+        data: {
+          name: data.name,
+        },
+      },
+    });
+
     setIsSubmitting(false);
 
-    login({ id: "new-user-1", name: data.name, email: data.email });
+    if (error) {
+      toast.error(error.message);
+      return;
+    }
+
     toast.success("Account created successfully!");
-    router.navigate({ to: "/dashboard" });
+    setIsSuccess(true);
   };
+
+  if (isSuccess) {
+    return (
+      <div className="relative min-h-screen flex items-center justify-center px-4 overflow-hidden">
+        <div className="clay-blob w-[420px] h-[420px] -top-40 -left-20 opacity-60" />
+        <div className="clay-blob w-[360px] h-[360px] -bottom-40 -right-20 opacity-50" />
+
+        <div className="relative w-full max-w-md clay-lg p-10 text-center animate-reveal my-8">
+          <div className="mb-6 flex justify-center">
+            <div className="w-16 h-16 rounded-full bg-green-100 flex items-center justify-center text-green-600">
+              <svg className="w-8 h-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M5 13l4 4L19 7"
+                />
+              </svg>
+            </div>
+          </div>
+          <h1 className="text-3xl font-bold mb-4">Check your email</h1>
+          <p className="text-muted-foreground mb-8">
+            We've sent a confirmation link to your email address. Please click the link to activate
+            your account.
+          </p>
+          <Link
+            to="/login"
+            search={{ redirect: undefined }}
+            className="btn-clay w-full py-3.5 font-semibold flex justify-center items-center gap-2"
+          >
+            Return to Login
+          </Link>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="relative min-h-screen flex items-center justify-center px-4 overflow-hidden">

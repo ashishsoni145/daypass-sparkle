@@ -13,9 +13,15 @@ export const Route = createFileRoute("/checkout")({
       date: search.date as string,
     };
   },
-  beforeLoad: ({ context }) => {
-    // In a real app with TanStack Router, we'd integrate auth into the router context
-    // Here we handle it via useEffect in the component since auth context is react-based
+  beforeLoad: async ({ search }) => {
+    const { supabase } = await import("@/lib/supabase");
+    const { data } = await supabase.auth.getSession();
+    if (!data.session) {
+      throw redirect({
+        to: "/login",
+        search: { redirect: `/checkout?gymId=${search.gymId}&date=${search.date}` },
+      });
+    }
   },
   component: CheckoutPage,
 });
@@ -26,13 +32,6 @@ function CheckoutPage() {
   const navigate = useNavigate();
   const [isProcessing, setIsProcessing] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
-
-  // Redirect if not logged in (handled after auth loads)
-  useEffect(() => {
-    if (!isAuthLoading && !user) {
-      navigate({ to: "/login", search: { redirect: `/checkout?gymId=${gymId}&date=${date}` } });
-    }
-  }, [isAuthLoading, user, navigate, gymId, date]);
 
   const { data: gym, isLoading: isGymLoading } = useQuery({
     queryKey: ["gym", gymId],
