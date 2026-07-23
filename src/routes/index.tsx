@@ -21,6 +21,7 @@ import {
   Users,
 } from "lucide-react";
 import heroCard from "@/assets/hero-card.png";
+import { useAuth } from "@/lib/auth-context";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -86,6 +87,8 @@ function Navbar() {
     { label: "Benefits", href: "#benefits" },
     { label: "FAQ", href: "#faq" },
   ];
+  const { user } = useAuth();
+
   return (
     <header
       className={`fixed top-0 inset-x-0 z-50 transition-all duration-500 ${scrolled ? "py-3 bg-background/80 backdrop-blur-md border-b" : "py-5"}`}
@@ -111,26 +114,42 @@ function Navbar() {
           </nav>
           <div className="flex items-center gap-2">
             <button
-              onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
+              onClick={() => {
+                setTheme(theme === "dark" ? "light" : "dark");
+                import("sonner").then((m) =>
+                  m.toast(`Switched to ${theme === "dark" ? "light" : "dark"} mode`),
+                );
+              }}
               className="btn-clay-ghost w-10 h-10 grid place-items-center rounded-full"
               aria-label="Toggle theme"
             >
               {theme === "dark" ? <Sun className="w-4 h-4" /> : <Moon className="w-4 h-4" />}
             </button>
-            <Link
-              to="/login"
-              search={{ redirect: undefined }}
-              className="hidden sm:inline text-sm text-muted-foreground hover:text-foreground px-3"
-            >
-              Sign in
-            </Link>
-            <Link
-              to="/login"
-              search={{ redirect: undefined }}
-              className="btn-clay hidden sm:inline-flex items-center gap-1.5 px-4 py-2 text-sm font-semibold"
-            >
-              Get Started <ArrowRight className="w-4 h-4" />
-            </Link>
+            {user ? (
+              <Link to="/dashboard" className="hidden sm:flex items-center gap-2 px-3">
+                <div className="w-8 h-8 rounded-full bg-primary/10 text-primary flex items-center justify-center font-bold text-sm uppercase">
+                  {user.name.charAt(0)}
+                </div>
+                <span className="text-sm font-medium">{user.name.split(" ")[0]}</span>
+              </Link>
+            ) : (
+              <>
+                <Link
+                  to="/login"
+                  search={{ redirect: undefined }}
+                  className="hidden sm:inline text-sm text-muted-foreground hover:text-foreground px-3"
+                >
+                  Sign in
+                </Link>
+                <Link
+                  to="/login"
+                  search={{ redirect: undefined }}
+                  className="btn-clay hidden sm:inline-flex items-center gap-1.5 px-4 py-2 text-sm font-semibold"
+                >
+                  Get Started <ArrowRight className="w-4 h-4" />
+                </Link>
+              </>
+            )}
             <button
               className="md:hidden btn-clay-ghost w-10 h-10 grid place-items-center"
               onClick={() => setOpen((v) => !v)}
@@ -152,13 +171,24 @@ function Navbar() {
                 {l.label}
               </a>
             ))}
-            <Link
-              to="/login"
-              search={{ redirect: undefined }}
-              className="btn-clay mt-3 inline-flex w-full items-center justify-center gap-1.5 px-4 py-3 text-sm font-semibold"
-            >
-              Get Started <ArrowRight className="w-4 h-4" />
-            </Link>
+            {user ? (
+              <Link
+                to="/dashboard"
+                onClick={() => setOpen(false)}
+                className="btn-clay mt-3 inline-flex w-full items-center justify-center gap-2 px-4 py-3 text-sm font-semibold"
+              >
+                Dashboard
+              </Link>
+            ) : (
+              <Link
+                to="/login"
+                search={{ redirect: undefined }}
+                onClick={() => setOpen(false)}
+                className="btn-clay mt-3 inline-flex w-full items-center justify-center gap-1.5 px-4 py-3 text-sm font-semibold"
+              >
+                Get Started <ArrowRight className="w-4 h-4" />
+              </Link>
+            )}
           </div>
         )}
       </div>
@@ -363,7 +393,11 @@ function FeaturedGyms() {
         <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-8">
           {gyms.map((g, i) => (
             <Reveal key={g.name} delay={i * 70}>
-              <div className="clay hover-lift p-3 group cursor-pointer">
+              <Link
+                to="/gym/$gymId"
+                params={{ gymId: String(i + 1) }}
+                className="clay hover-lift p-3 group cursor-pointer block"
+              >
                 <div className="relative h-44 clay-inset rounded-3xl overflow-hidden grid place-items-center">
                   <Dumbbell className="w-20 h-20 text-foreground/15 group-hover:scale-110 group-hover:rotate-6 transition-transform duration-500" />
                   <div className="absolute top-3 left-3 clay-sm rounded-full px-3 py-1 text-[11px] font-medium">
@@ -387,10 +421,12 @@ function FeaturedGyms() {
                       <span className="text-2xl font-bold">${g.price}</span>
                       <span className="text-xs text-muted-foreground"> / day</span>
                     </div>
-                    <button className="btn-clay px-4 py-2 text-xs font-semibold">Book pass</button>
+                    <div className="btn-clay px-4 py-2 text-xs font-semibold flex items-center justify-center">
+                      Book pass
+                    </div>
                   </div>
                 </div>
-              </div>
+              </Link>
             </Reveal>
           ))}
         </div>
