@@ -144,7 +144,11 @@ function RegisterPage() {
 
         <p className="mt-6 text-sm text-center text-muted-foreground">
           Already have an account?{" "}
-          <Link to="/login" search={{ redirect: undefined }} className="text-foreground font-medium hover:underline cursor-pointer">
+          <Link
+            to="/login"
+            search={{ redirect: undefined }}
+            className="text-foreground font-medium hover:underline cursor-pointer"
+          >
             Sign in
           </Link>
         </p>

@@ -54,8 +54,8 @@ function LoginPage() {
     if (data.email === "test@example.com" && data.password === "password") {
       login({ id: "1", name: "Test User", email: data.email });
       toast.success("Successfully logged in!");
-      if (search.redirect) {
-        // use window.location.href or an external redirect logic since we don't know if redirect is a valid typed route
+      if (search.redirect && search.redirect.startsWith("/") && !search.redirect.startsWith("//")) {
+        // Validate redirect to prevent Open Redirect / XSS
         window.location.href = search.redirect;
       } else {
         router.navigate({ to: "/dashboard" });

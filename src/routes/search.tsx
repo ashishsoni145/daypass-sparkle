@@ -71,7 +71,7 @@ function SearchPage() {
             {filteredGyms?.map((gym) => (
               <div
                 key={gym.id}
-                onClick={() => navigate({ to: `/gym/${gym.id}` })}
+                onClick={() => navigate({ to: "/gym/$gymId", params: { gymId: gym.id } })}
                 className="clay hover-lift p-3 group cursor-pointer"
               >
                 <div className="relative h-48 rounded-3xl overflow-hidden">
