@@ -4,7 +4,6 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
 import { toast } from "sonner";
-import { useAuth } from "@/lib/auth-context";
 import { useState } from "react";
 
 export const Route = createFileRoute("/login")({
@@ -32,7 +31,6 @@ const loginSchema = z.object({
 type LoginFormValues = z.infer<typeof loginSchema>;
 
 function LoginPage() {
-  const { login } = useAuth();
   const router = useRouter();
   const search = Route.useSearch();
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -47,21 +45,29 @@ function LoginPage() {
 
   const onSubmit = async (data: LoginFormValues) => {
     setIsSubmitting(true);
-    // Simulate API call
-    await new Promise((resolve) => setTimeout(resolve, 1000));
+
+    // Dynamically import supabase
+    const { supabase } = await import("@/lib/supabase");
+
+    const { error } = await supabase.auth.signInWithPassword({
+      email: data.email,
+      password: data.password,
+    });
+
     setIsSubmitting(false);
 
-    if (data.email === "test@example.com" && data.password === "password") {
-      login({ id: "1", name: "Test User", email: data.email });
-      toast.success("Successfully logged in!");
-      if (search.redirect && search.redirect.startsWith("/") && !search.redirect.startsWith("//")) {
-        // Validate redirect to prevent Open Redirect / XSS
-        window.location.href = search.redirect;
-      } else {
-        router.navigate({ to: "/dashboard" });
-      }
+    if (error) {
+      toast.error(error.message);
+      return;
+    }
+
+    toast.success("Successfully logged in!");
+
+    if (search.redirect && search.redirect.startsWith("/") && !search.redirect.startsWith("//")) {
+      // Validate redirect to prevent Open Redirect / XSS
+      window.location.href = search.redirect;
     } else {
-      toast.error("Invalid credentials. Try test@example.com / password");
+      router.navigate({ to: "/dashboard" });
     }
   };
 
