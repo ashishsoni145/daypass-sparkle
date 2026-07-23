@@ -7,9 +7,12 @@ import {
   HeadContent,
   Scripts,
 } from "@tanstack/react-router";
-import { useEffect, type ReactNode } from "react";
+import { type ReactNode } from "react";
 
 import appCss from "../styles.css?url";
+import { Toaster } from "@/components/ui/sonner";
+import { AuthProvider } from "@/lib/auth-context";
+import { ThemeProvider } from "@/components/theme-provider";
 
 function NotFoundComponent() {
   return (
@@ -122,9 +125,14 @@ function RootComponent() {
   const { queryClient } = Route.useRouteContext();
 
   return (
-    <QueryClientProvider client={queryClient}>
-      {/* Required: nested routes render here. Removing <Outlet /> breaks all child routes. */}
-      <Outlet />
-    </QueryClientProvider>
+    <ThemeProvider defaultTheme="light" storageKey="daypass-theme">
+      <QueryClientProvider client={queryClient}>
+        <AuthProvider>
+          {/* Required: nested routes render here. Removing <Outlet /> breaks all child routes. */}
+          <Outlet />
+          <Toaster />
+        </AuthProvider>
+      </QueryClientProvider>
+    </ThemeProvider>
   );
 }
