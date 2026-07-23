@@ -1,9 +1,12 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useEffect, useRef, useState } from "react";
+import { useTheme } from "@/components/theme-provider";
 import {
   ArrowRight,
   MapPin,
   Search,
+  Moon,
+  Sun,
   Zap,
   Calendar,
   ShieldCheck,
@@ -75,6 +78,8 @@ function Navbar() {
     window.addEventListener("scroll", onScroll);
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
+  const { theme, setTheme } = useTheme();
+
   const links = [
     { label: "Gyms", href: "#gyms" },
     { label: "How it works", href: "#how" },
@@ -83,7 +88,7 @@ function Navbar() {
   ];
   return (
     <header
-      className={`fixed top-0 inset-x-0 z-50 transition-all duration-500 ${scrolled ? "py-3" : "py-5"}`}
+      className={`fixed top-0 inset-x-0 z-50 transition-all duration-500 ${scrolled ? "py-3 bg-background/80 backdrop-blur-md border-b" : "py-5"}`}
     >
       <div className="mx-auto max-w-6xl px-4">
         <div className="clay-sm rounded-full px-5 py-3 flex items-center justify-between">
@@ -105,6 +110,13 @@ function Navbar() {
             ))}
           </nav>
           <div className="flex items-center gap-2">
+            <button
+              onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
+              className="btn-clay-ghost w-10 h-10 grid place-items-center rounded-full"
+              aria-label="Toggle theme"
+            >
+              {theme === "dark" ? <Sun className="w-4 h-4" /> : <Moon className="w-4 h-4" />}
+            </button>
             <Link
               to="/login"
               className="hidden sm:inline text-sm text-muted-foreground hover:text-foreground px-3"
@@ -286,9 +298,12 @@ function SearchPreview() {
                 className="bg-transparent flex-1 outline-none text-sm placeholder:text-muted-foreground"
               />
             </div>
-            <button className="btn-clay px-6 py-3 font-semibold inline-flex items-center justify-center gap-2">
+            <Link
+              to="/search"
+              className="btn-clay px-6 py-3 font-semibold inline-flex items-center justify-center gap-2"
+            >
               <Search className="w-4 h-4" /> Find gyms
-            </button>
+            </Link>
           </div>
           <div className="mt-4 flex flex-wrap gap-2 justify-center">
             {["Yoga", "CrossFit", "Boxing", "Pool", "Sauna", "24/7"].map((t) => (
@@ -332,12 +347,12 @@ function FeaturedGyms() {
                 on demand.
               </h2>
             </div>
-            <a
-              href="#"
+            <Link
+              to="/search"
               className="text-sm text-foreground inline-flex items-center gap-1 border-b border-foreground/30 pb-0.5 hover:border-foreground"
             >
               View all <ArrowRight className="w-4 h-4" />
-            </a>
+            </Link>
           </div>
         </Reveal>
 

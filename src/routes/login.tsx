@@ -1,5 +1,11 @@
-import { createFileRoute, Link } from "@tanstack/react-router";
-import { ArrowLeft } from "lucide-react";
+import { createFileRoute, Link, useRouter } from "@tanstack/react-router";
+import { ArrowLeft, Loader2 } from "lucide-react";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import * as z from "zod";
+import { toast } from "sonner";
+import { useAuth } from "@/lib/auth-context";
+import { useState } from "react";
 
 export const Route = createFileRoute("/login")({
   head: () => ({
@@ -13,7 +19,41 @@ export const Route = createFileRoute("/login")({
   component: LoginPage,
 });
 
+const loginSchema = z.object({
+  email: z.string().email({ message: "Invalid email address" }),
+  password: z.string().min(6, { message: "Password must be at least 6 characters" }),
+});
+
+type LoginFormValues = z.infer<typeof loginSchema>;
+
 function LoginPage() {
+  const { login } = useAuth();
+  const router = useRouter();
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<LoginFormValues>({
+    resolver: zodResolver(loginSchema),
+  });
+
+  const onSubmit = async (data: LoginFormValues) => {
+    setIsSubmitting(true);
+    // Simulate API call
+    await new Promise((resolve) => setTimeout(resolve, 1000));
+    setIsSubmitting(false);
+
+    if (data.email === "test@example.com" && data.password === "password") {
+      login({ id: "1", name: "Test User", email: data.email });
+      toast.success("Successfully logged in!");
+      router.navigate({ to: "/dashboard" });
+    } else {
+      toast.error("Invalid credentials. Try test@example.com / password");
+    }
+  };
+
   return (
     <div className="relative min-h-screen flex items-center justify-center px-4 overflow-hidden">
       <div className="clay-blob w-[420px] h-[420px] -top-40 -left-20 opacity-60" />
@@ -37,16 +77,18 @@ function LoginPage() {
           <p className="mt-2 text-muted-foreground text-sm">Sign in to book your next day pass.</p>
         </div>
 
-        <form className="space-y-4">
+        <form className="space-y-4" onSubmit={handleSubmit(onSubmit)}>
           <div>
             <label className="text-xs uppercase tracking-wider text-muted-foreground font-semibold">
               Email
             </label>
             <input
               type="email"
+              {...register("email")}
               placeholder="you@example.com"
-              className="mt-2 w-full clay-inset px-4 py-3 bg-transparent outline-none"
+              className={`mt-2 w-full clay-inset px-4 py-3 bg-transparent outline-none ${errors.email ? "border-red-500 border" : ""}`}
             />
+            {errors.email && <p className="text-red-500 text-xs mt-1">{errors.email.message}</p>}
           </div>
           <div>
             <label className="text-xs uppercase tracking-wider text-muted-foreground font-semibold">
@@ -54,12 +96,20 @@ function LoginPage() {
             </label>
             <input
               type="password"
+              {...register("password")}
               placeholder="••••••••"
-              className="mt-2 w-full clay-inset px-4 py-3 bg-transparent outline-none"
+              className={`mt-2 w-full clay-inset px-4 py-3 bg-transparent outline-none ${errors.password ? "border-red-500 border" : ""}`}
             />
+            {errors.password && (
+              <p className="text-red-500 text-xs mt-1">{errors.password.message}</p>
+            )}
           </div>
-          <button type="button" className="btn-clay w-full py-3.5 font-semibold mt-4">
-            Sign in
+          <button
+            type="submit"
+            disabled={isSubmitting}
+            className="btn-clay w-full py-3.5 font-semibold mt-4 flex justify-center items-center gap-2"
+          >
+            {isSubmitting ? <Loader2 className="w-4 h-4 animate-spin" /> : "Sign in"}
           </button>
         </form>
 
