@@ -3,6 +3,7 @@ import { useQuery } from "@tanstack/react-query";
 import { fetchGyms } from "@/lib/api";
 import { MapPin, Search, Star, Loader2, ArrowLeft } from "lucide-react";
 import { useState } from "react";
+import { useAuth } from "@/lib/auth-context";
 
 export const Route = createFileRoute("/search")({
   component: SearchPage,
@@ -11,6 +12,7 @@ export const Route = createFileRoute("/search")({
 function SearchPage() {
   const [searchTerm, setSearchTerm] = useState("");
   const navigate = useNavigate();
+  const { user } = useAuth();
 
   const { data: gyms, isLoading } = useQuery({
     queryKey: ["gyms"],
@@ -47,12 +49,29 @@ function SearchPage() {
               />
             </div>
           </div>
-          <Link
-            to="/"
-            className="text-sm text-muted-foreground hover:text-foreground hidden sm:flex items-center gap-1"
-          >
-            <ArrowLeft className="w-4 h-4" /> Home
-          </Link>
+          <div className="flex items-center gap-4">
+            <Link
+              to="/"
+              className="text-sm text-muted-foreground hover:text-foreground hidden sm:flex items-center gap-1"
+            >
+              <ArrowLeft className="w-4 h-4" /> Home
+            </Link>
+            {user ? (
+              <Link to="/dashboard" className="hidden sm:flex items-center gap-2">
+                <div className="w-8 h-8 rounded-full bg-primary/10 text-primary flex items-center justify-center font-bold text-sm uppercase">
+                  {user.name.charAt(0)}
+                </div>
+              </Link>
+            ) : (
+              <Link
+                to="/login"
+                search={{ redirect: undefined }}
+                className="hidden sm:flex items-center gap-1 text-sm font-medium"
+              >
+                Sign in
+              </Link>
+            )}
+          </div>
         </div>
       </header>
 

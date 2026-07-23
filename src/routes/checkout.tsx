@@ -45,8 +45,24 @@ function CheckoutPage() {
     // Simulate payment processing
     await new Promise((resolve) => setTimeout(resolve, 2000));
     setIsProcessing(false);
+
+    // Save to local storage
+    if (gym) {
+      const existingPasses = JSON.parse(localStorage.getItem("bookedPasses") || "[]");
+      const newPass = {
+        id: Math.random().toString(36).substring(7),
+        gymId: gym.id,
+        gymName: gym.name,
+        gymCity: gym.city,
+        gymImage: gym.images[0],
+        date: date,
+        purchaseDate: new Date().toISOString(),
+      };
+      localStorage.setItem("bookedPasses", JSON.stringify([...existingPasses, newPass]));
+    }
+
     setIsSuccess(true);
-    toast.success("Payment successful!");
+    toast.success("Payment successful! Pass booked.");
 
     // Redirect to dashboard after brief delay
     setTimeout(() => {

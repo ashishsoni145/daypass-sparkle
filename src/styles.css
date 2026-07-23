@@ -81,6 +81,44 @@
   --transition-smooth: cubic-bezier(0.22, 1, 0.36, 1);
 }
 
+:root.dark {
+  --background: oklch(0.15 0 0); /* near-black canvas */
+  --foreground: oklch(0.955 0 0); /* soft off-white text */
+
+  --card: oklch(0.18 0 0);
+  --card-foreground: oklch(0.955 0 0);
+
+  --popover: oklch(0.18 0 0);
+  --popover-foreground: oklch(0.955 0 0);
+
+  --primary: oklch(0.98 0 0); /* white */
+  --primary-foreground: oklch(0.15 0 0);
+
+  --secondary: oklch(0.22 0 0);
+  --secondary-foreground: oklch(0.955 0 0);
+
+  --muted: oklch(0.22 0 0);
+  --muted-foreground: oklch(0.65 0 0);
+
+  --accent: oklch(0.98 0 0);
+  --accent-foreground: oklch(0.15 0 0);
+
+  --destructive: oklch(0.55 0.2 25);
+  --destructive-foreground: oklch(0.98 0 0);
+
+  --border: oklch(1 0 0 / 12%);
+  --input: oklch(1 0 0 / 12%);
+  --ring: oklch(0.98 0 0 / 30%);
+
+  /* Claymorphic shadows — adapted for dark mode */
+  --shadow-clay: -10px -10px 24px oklch(0.22 0 0 / 0.8), 12px 12px 28px oklch(0 0 0 / 0.6);
+  --shadow-clay-sm: -4px -4px 10px oklch(0.22 0 0 / 0.8), 6px 6px 14px oklch(0 0 0 / 0.5);
+  --shadow-clay-lg: -16px -16px 36px oklch(0.25 0 0 / 0.8), 20px 20px 42px oklch(0 0 0 / 0.7);
+  --shadow-clay-inset:
+    inset 4px 4px 10px oklch(0 0 0 / 0.6), inset -4px -4px 10px oklch(0.25 0 0 / 0.6);
+  --shadow-clay-dark: -8px -8px 20px oklch(0.28 0 0), 12px 12px 28px oklch(0 0 0 / 0.8);
+}
+
 @layer base {
   html {
     scroll-behavior: smooth;
@@ -135,24 +173,18 @@
   box-shadow: var(--shadow-clay-dark);
 }
 
-/* Primary CTA — pillowy black button */
+/* Primary CTA */
 @utility btn-clay {
-  background: oklch(0.15 0 0);
-  color: oklch(0.98 0 0);
+  background: var(--primary);
+  color: var(--primary-foreground);
   border-radius: 999px;
-  box-shadow:
-    -4px -4px 10px oklch(1 0 0 / 0.9),
-    6px 6px 16px oklch(0 0 0 / 0.18),
-    inset 0 1px 0 oklch(1 0 0 / 0.08);
+  box-shadow: var(--shadow-clay-sm);
   transition:
     transform 0.35s var(--transition-smooth),
     box-shadow 0.35s var(--transition-smooth);
   &:hover {
     transform: translateY(-2px);
-    box-shadow:
-      -6px -6px 14px oklch(1 0 0 / 0.95),
-      10px 10px 22px oklch(0 0 0 / 0.22),
-      inset 0 1px 0 oklch(1 0 0 / 0.1);
+    box-shadow: var(--shadow-clay);
   }
   &:active {
     transform: translateY(1px);
